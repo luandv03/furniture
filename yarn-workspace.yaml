@@ -1,0 +1,5 @@
+# yarn-workspace.yaml
+
+packages:
+    - "packages/*"
+    - "apps/*"

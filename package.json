@@ -1,0 +1,24 @@
+{
+    "name": "do_noi_that_cao_cap_project",
+    "version": "1.1.1",
+    "private": true,
+    "description": "This is web that to show products wit wood!",
+    "main": "index.js",
+    "repository": "https://github.com/githubk3/do_go_dinh_thuc.git",
+    "author": "Đinh Văn Luận <dinhvanluan2k3@gmail.com>",
+    "license": "MIT",
+    "workspaces": [
+        "packages/*",
+        "apps/*"
+    ],
+    "scripts": {
+        "build": "turbo run build",
+        "test": "turbo run test",
+        "lint": "turbo run lint",
+        "dev": "turbo run dev",
+        "add": "turbo add"
+    },
+    "dependencies": {
+        "turbo": "^1.8.5"
+    }
+}
