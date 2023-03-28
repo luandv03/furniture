@@ -1,8 +1,10 @@
+import { TokenResetPasswordRepository } from './repositories/token-reset-password.repository';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { AdminSchema } from './schema/admin.schema';
+import { TokenResetPasswordSchema } from './schema/token-reset-password.schema';
 import { AdminRepository } from './repositories/admin.repository';
 import { AdminService } from './services/admin.service';
 import { jwtConstrant } from './constrant/jwt.config';
@@ -16,6 +18,10 @@ import { JwtStrategy } from './strategies/jwt-auth.strategy';
         name: 'Admin',
         schema: AdminSchema,
       },
+      {
+        name: 'TokenResetPassword',
+        schema: TokenResetPasswordSchema,
+      },
     ]),
     PassportModule.register({
       defaultStrategy: 'jwt',
@@ -28,7 +34,12 @@ import { JwtStrategy } from './strategies/jwt-auth.strategy';
     }),
   ],
   controllers: [AdminController],
-  providers: [AdminRepository, AdminService, JwtStrategy],
+  providers: [
+    AdminRepository,
+    AdminService,
+    JwtStrategy,
+    TokenResetPasswordRepository,
+  ],
   exports: [],
 })
 export class AdminModule {}

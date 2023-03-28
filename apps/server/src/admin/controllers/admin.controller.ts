@@ -13,6 +13,7 @@ import { AdminLoginDto } from './../dto/admin.dto';
 import { AdminService } from '../services/admin.service';
 import { AdminRegisterDto } from '../dto/admin.dto';
 import { IAdmin } from '../interfaces/admin.interface';
+import { ResetPasswordDto } from './../dto/admin.dto';
 
 @Controller('admin')
 export class AdminController {
@@ -70,5 +71,17 @@ export class AdminController {
     res.cookie('auth-cookie', secretData, { httpOnly: true });
 
     return data;
+  }
+
+  @Post('request_reset_password')
+  async requestResetPassword(@Body() payload: any): Promise<{ link: string }> {
+    return this.adminService.requestResetPassword(payload.email);
+  }
+
+  @Post('reset_password')
+  async resetPassword(
+    @Body() resetPasswordDto: ResetPasswordDto,
+  ): Promise<any> {
+    return this.adminService.resetPassword(resetPasswordDto);
   }
 }
