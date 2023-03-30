@@ -8,7 +8,7 @@ export class BaseRepository<T extends Document> {
     return await createdEntity.save();
   }
 
-  async findById(id: string, option?: QueryOptions): Promise<T | any> {
+  async findById(id: string | any, option?: QueryOptions): Promise<T | any> {
     return this.model.findById(id, option);
   }
 

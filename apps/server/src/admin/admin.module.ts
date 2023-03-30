@@ -40,6 +40,6 @@ import { JwtStrategy } from './strategies/jwt-auth.strategy';
     JwtStrategy,
     TokenResetPasswordRepository,
   ],
-  exports: [],
+  exports: [JwtStrategy],
 })
 export class AdminModule {}
