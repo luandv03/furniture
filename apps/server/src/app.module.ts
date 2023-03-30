@@ -1,17 +1,19 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { AdminModule } from './admin/admin.module';
 import { ConfigService, ConfigModule } from '@nestjs/config';
 import { MailerModule, HandlebarsAdapter } from '@nest-modules/mailer';
 import { join } from 'path';
+import { AppController } from './app.controller';
+import { AdminModule } from './admin/admin.module';
+import { ProductModule } from './product/product.module';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: '.dev.env' }),
     MongooseModule.forRoot('mongodb://localhost/do_go_dinh_thuc'),
     AdminModule,
+    ProductModule,
     MailerModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (config: ConfigService) => ({
