@@ -5,7 +5,6 @@ export const CategorySchema = new mongoose.Schema(
   {
     title: { type: String, require: true },
     roomId: { type: mongoose.Schema.Types.ObjectId, ref: 'Room' },
-    sumProduct: { type: Number },
   },
   { timestamps: true, collection: 'category' },
 );
@@ -13,5 +12,4 @@ export const CategorySchema = new mongoose.Schema(
 export class Category extends mongoose.Document {
   title: string;
   roomId: Room;
-  sumProduct: number;
 }

@@ -69,4 +69,8 @@ export class BaseRepository<T extends Document> {
   async findByIdAndUpdate(id: any, update: any) {
     return this.model.findByIdAndUpdate(id, update);
   }
+
+  async countWithCondition(filter: any) {
+    return this.model.count(filter);
+  }
 }
