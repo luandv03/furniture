@@ -3,10 +3,14 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { RoomRepository } from '../repositories/room.repository';
 import { Room } from '../schemas/room.schema';
 import { Types } from 'mongoose';
+import { CategoryRepository } from '../repositories/category.repository';
 
 @Injectable()
 export class RoomService {
-  constructor(private readonly roomRepository: RoomRepository) {}
+  constructor(
+    private readonly roomRepository: RoomRepository,
+    private readonly categoryRepository: CategoryRepository,
+  ) {}
 
   async createRoom(roomCreateDto: RoomCreateDto): Promise<any> {
     const checkExist = await this.roomRepository.findByCondition({
@@ -53,8 +57,20 @@ export class RoomService {
 
   async deleteRoomById(roomId: string): Promise<any> {
     const room = await this.getRoomById(roomId);
-    // Đoạn này sẽ cần check thêm liệu có category nào thuộc room này không?
+    // Đoạn này sẽ cần check thêm liệu room này có đang chứa category nào không?
     // Nếu không thì mới xóa
+    const countCategoryInThisRoom =
+      await this.categoryRepository.countWithCondition({
+        roomId,
+      });
+
+    if (countCategoryInThisRoom > 0) {
+      throw new HttpException(
+        `Can't delete room which exist ${countCategoryInThisRoom} categories!`,
+        HttpStatus.NOT_ACCEPTABLE,
+      );
+    }
+
     await this.roomRepository.deleteOne(room._id);
 
     return {

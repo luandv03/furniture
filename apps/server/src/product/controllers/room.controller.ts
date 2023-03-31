@@ -22,12 +22,12 @@ import { Room } from '../schemas/room.schema';
 export class RoomController {
   constructor(private readonly roomService: RoomService) {}
 
-  @Post()
+  @Post('/create')
   async createRoom(@Body() roomCreateDto: RoomCreateDto): Promise<any> {
     return this.roomService.createRoom(roomCreateDto);
   }
 
-  @Get()
+  @Get('/all')
   async getRoomAll(): Promise<Room[]> {
     return this.roomService.getRoomAll();
   }
@@ -37,7 +37,7 @@ export class RoomController {
     return this.roomService.getRoomById(roomId);
   }
 
-  @Put('/:roomId')
+  @Put('/update/:roomId')
   async updateRoomById(
     @Param('roomId') roomId: string,
     @Body() payload: RoomCreateDto,
@@ -45,8 +45,8 @@ export class RoomController {
     return this.roomService.updateRoomById(roomId, payload);
   }
 
-  @Delete('/:roomId')
-  async deleteRoomById(roomId: string): Promise<any> {
+  @Delete('/delete/:roomId')
+  async deleteRoomById(@Param('roomId') roomId: string): Promise<any> {
     return this.roomService.deleteRoomById(roomId);
   }
 }

@@ -8,7 +8,9 @@ import { RoomRepository } from './repositories/room.repository';
 import { CategoryRepository } from './repositories/category.repository';
 import { ProductRepository } from './repositories/product.repository';
 import { RoomController } from './controllers/room.controller';
+import { CategoryController } from './controllers/category.controller';
 import { RoomService } from './services/room.service';
+import { CategoryService } from './services/category.service';
 
 @Module({
   imports: [
@@ -27,13 +29,14 @@ import { RoomService } from './services/room.service';
       },
     ]),
   ],
-  controllers: [RoomController],
+  controllers: [RoomController, CategoryController],
   providers: [
     RoomRepository,
     CategoryRepository,
     ProductRepository,
     RolesGuard,
     RoomService,
+    CategoryService,
   ],
   exports: [],
 })
