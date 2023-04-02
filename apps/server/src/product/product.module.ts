@@ -11,9 +11,14 @@ import { RoomController } from './controllers/room.controller';
 import { CategoryController } from './controllers/category.controller';
 import { RoomService } from './services/room.service';
 import { CategoryService } from './services/category.service';
+import { ProductService } from './services/product.service';
+import { ProductController } from './controllers/product.controller';
+import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule,
     MongooseModule.forFeature([
       {
         name: 'Room',
@@ -29,14 +34,17 @@ import { CategoryService } from './services/category.service';
       },
     ]),
   ],
-  controllers: [RoomController, CategoryController],
+  controllers: [RoomController, CategoryController, ProductController],
   providers: [
+    ConfigService,
     RoomRepository,
     CategoryRepository,
     ProductRepository,
     RolesGuard,
     RoomService,
     CategoryService,
+    ProductService,
+    CloudinaryService,
   ],
   exports: [],
 })

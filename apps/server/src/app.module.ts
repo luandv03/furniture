@@ -7,6 +7,7 @@ import { AppController } from './app.controller';
 import { AdminModule } from './admin/admin.module';
 import { ProductModule } from './product/product.module';
 import { AppService } from './app.service';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { AppService } from './app.service';
       }),
       inject: [ConfigService],
     }),
+    CloudinaryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
