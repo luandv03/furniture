@@ -5,8 +5,8 @@ import { Category } from './categoty.schema';
 export const ProductSchema = new mongoose.Schema(
   {
     title: { type: String, require: true },
-    description: { type: String, require: true }, // kích thước, chất liệu,...
-    price: { type: Number, require: true }, // giá sản phẩm hiện tại
+    description: { type: String }, // kích thước, chất liệu,...
+    price: { type: Number }, // giá sản phẩm hiện tại
     discount: { type: Number }, // % giam gia
     price_sale: { type: Number }, // giá sau khi giảm giá
     product_photo: [{ type: Object }],

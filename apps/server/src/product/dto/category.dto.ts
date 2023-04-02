@@ -1,7 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
-import { Type, Transform } from 'class-transformer';
+import { Type } from 'class-transformer';
 import { Types } from 'mongoose';
-import { toMongoObjectId } from '../utils/toObjectId.util';
 
 export class CategoryCreateDto {
   @IsNotEmpty()
@@ -15,6 +14,5 @@ export class CategoryCreateDto {
 
 export class CategoryIdDto {
   @Type(() => Types.ObjectId)
-  @Transform(toMongoObjectId)
   categoryId: Types.ObjectId;
 }
