@@ -34,6 +34,14 @@ export class BaseRepository<T extends Document> {
     return this.model.find();
   }
 
+  // paginate with type StackOverFlow
+  async findAllWithPaginate(page: number, pageSize: number): Promise<T[]> {
+    return this.model
+      .find()
+      .skip((page - 1) * pageSize)
+      .limit(pageSize);
+  }
+
   async aggregate(option: any) {
     return this.model.aggregate(option);
   }

@@ -25,5 +25,5 @@ or yarn dev --filter admin --filter server
 # Để cài package cho từng app
 
 ```
-yarn workspace admin add axios
+VD: yarn workspace admin add axios
 ```
