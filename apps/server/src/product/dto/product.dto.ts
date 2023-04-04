@@ -1,30 +1,43 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsOptional } from 'class-validator';
+import { Expose } from 'class-transformer';
+import { Status } from '../enums/product.enum';
+import { BaseDto } from 'src/common/base.dto';
 
-export class ProductCreateDto {
+export class ProductCreateDto extends BaseDto {
   @IsNotEmpty()
+  @Expose()
   title: string;
 
   @IsNotEmpty()
+  @Expose()
   description: string;
 
   @IsNotEmpty()
+  @Expose()
   price: number;
 
   @IsNotEmpty()
-  discount: number;
+  @Expose()
+  discount?: number;
+
+  @IsOptional()
+  @Expose()
+  price_sale?: number;
+
+  @IsOptional()
+  @Expose()
+  product_photo: object[];
 
   @IsNotEmpty()
-  price_sale: number;
+  @Expose()
+  qty: number;
 
   @IsNotEmpty()
-  product_photo: string;
+  @Expose()
+  categoryId: string;
 
-  @IsNotEmpty()
-  qty: string;
-
-  @IsNotEmpty()
-  category: string;
-
-  @IsNotEmpty()
-  status: string;
+  @IsOptional()
+  @IsEnum(Status, { each: true })
+  @Expose()
+  status: Status;
 }
