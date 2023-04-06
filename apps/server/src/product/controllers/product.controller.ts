@@ -54,7 +54,7 @@ export class ProductController {
   }
 
   @Get('filter')
-  async filterProduct(@Query() query: any): Promise<Product> {
+  async filterProduct(@Query() query: any): Promise<any> {
     return await this.productService.filterProduct(query);
   }
 

@@ -91,7 +91,7 @@ export class ProductService {
   }
 
   //filter in table as: ?categoryId=...&status=....&page=1&pageSize=10
-  async filterProduct(query: any): Promise<Product> {
+  async filterProduct(query: any): Promise<any> {
     const { page, pageSize, ...rest } = query;
 
     const countProducts = await this.productRepository.countWithCondition(rest);
