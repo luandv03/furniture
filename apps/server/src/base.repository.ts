@@ -9,7 +9,7 @@ export class BaseRepository<T extends Document> {
   }
 
   async findById(id: string | any, option?: QueryOptions): Promise<T | any> {
-    return this.model.findById(id, option);
+    return this.model.findById(id, option).lean();
   }
 
   async findByCondition(
@@ -38,6 +38,18 @@ export class BaseRepository<T extends Document> {
   async findAllWithPaginate(page: number, pageSize: number): Promise<T[]> {
     return this.model
       .find()
+      .skip((page - 1) * pageSize)
+      .limit(pageSize);
+  }
+
+  // paginate with type StackOverFlow
+  async getItemWithPaginateAndCondition(
+    filter: any,
+    page: number,
+    pageSize: number,
+  ): Promise<T[]> {
+    return this.model
+      .find(filter)
       .skip((page - 1) * pageSize)
       .limit(pageSize);
   }
