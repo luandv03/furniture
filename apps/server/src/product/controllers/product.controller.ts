@@ -19,7 +19,7 @@ import { ProductService } from '../services/product.service';
 import { Roles } from '../decorators/roles.decorator';
 import { Role } from '../enums/role.enum';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { IResponse } from '../interfaces/response.interface';
+import { IResponse } from '../../common/response.interface';
 import { ProductCreateDto } from '../dto/product.dto';
 import { Product } from '../schemas/product.schema';
 import { IProductUpdate } from '../interfaces/product.interface';

@@ -2,7 +2,7 @@ import { TokenResetPassword } from '../schema/token-reset-password.schema';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { BaseRepository } from 'src/base.repository';
+import { BaseRepository } from 'src/common/base.repository';
 
 @Injectable()
 export class TokenResetPasswordRepository extends BaseRepository<TokenResetPassword> {

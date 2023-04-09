@@ -3,7 +3,7 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { Types } from 'mongoose';
 import { CategoryRepository } from '../repositories/category.repository';
 import { CategoryCreateDto } from '../dto/category.dto';
-import { IResponse } from '../interfaces/response.interface';
+import { IResponse } from '../../common/response.interface';
 import { ICategoryUpdate } from '../interfaces/category.interface';
 
 @Injectable()
