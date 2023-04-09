@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 export const GoogleLoginSchema = new mongoose.Schema(
   {
-    userId: {
+    user_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true,
@@ -12,12 +12,12 @@ export const GoogleLoginSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-    collection: 'google',
+    collection: 'google-login',
   },
 );
 
 export class GoogleLogin extends mongoose.Document {
-  userId: string;
+  user_id: string;
   email: string;
   google_id: string;
 }
