@@ -14,7 +14,7 @@ import { Role } from '../enums/role.enum';
 import { JwtAuthGuard } from 'src/admin/guards/jwt-auth.guard';
 import { RolesGuard } from '../guards/roles.guard';
 import { CategoryService } from '../services/category.service';
-import { IResponse } from '../interfaces/response.interface';
+import { IResponse } from '../../common/response.interface';
 import { Category } from '../schemas/categoty.schema';
 import { ICategoryUpdate } from '../interfaces/category.interface';
 

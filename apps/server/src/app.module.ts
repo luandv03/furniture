@@ -8,6 +8,7 @@ import { AdminModule } from './admin/admin.module';
 import { ProductModule } from './product/product.module';
 import { AppService } from './app.service';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { CustomerModule } from './customer/customer.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
     MongooseModule.forRoot('mongodb://localhost/do_go_dinh_thuc'),
     AdminModule,
     ProductModule,
+    CustomerModule,
     MailerModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (config: ConfigService) => ({

@@ -4,7 +4,7 @@ import { Types } from 'mongoose';
 import { ProductCreateDto } from './../dto/product.dto';
 import { ProductRepository } from '../repositories/product.repository';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
-import { IResponse } from '../interfaces/response.interface';
+import { IResponse } from '../../common/response.interface';
 import { Product } from '../schemas/product.schema';
 import { IProductUpdate, IPhoto } from '../interfaces/product.interface';
 
