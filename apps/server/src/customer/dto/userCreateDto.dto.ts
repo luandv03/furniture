@@ -28,3 +28,12 @@ export class UserCreateDto {
   @IsNotEmpty()
   token: string;
 }
+
+export class EmailLoginDto {
+  @IsNotEmpty()
+  @IsEmail()
+  email: string;
+
+  @IsNotEmpty()
+  password: string;
+}

@@ -1,6 +1,7 @@
 // packages
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { JwtModule } from '@nestjs/jwt';
 
 //entities
 import { UserSchema } from './schema/user.schema';
@@ -13,6 +14,7 @@ import { GoogleLoginRepository } from './repositories/google-login.repository';
 import { TokenVerifyEmailRepository } from './repositories/token-verify-email.repository';
 import { CustomerService } from './services/customer.service';
 import { CustomerController } from './controllers/customer.controller';
+import { jwtConstrant } from 'src/admin/constrant/jwt.config';
 
 @Module({
   imports: [
@@ -34,6 +36,10 @@ import { CustomerController } from './controllers/customer.controller';
         schema: TokenVerifyEmailSchema,
       },
     ]),
+    JwtModule.register({
+      secret: jwtConstrant.SECRET_KEY,
+      signOptions: { expiresIn: jwtConstrant.EXPIRES_IN },
+    }),
   ],
   controllers: [CustomerController],
   providers: [
