@@ -2,6 +2,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 
 //entities
 import { UserSchema } from './schema/user.schema';
@@ -15,6 +16,7 @@ import { TokenVerifyEmailRepository } from './repositories/token-verify-email.re
 import { CustomerService } from './services/customer.service';
 import { CustomerController } from './controllers/customer.controller';
 import { jwtConstrant } from 'src/admin/constrant/jwt.config';
+import { JwtStrategy } from './strategies/jwt-auth.strategy';
 
 @Module({
   imports: [
@@ -36,6 +38,11 @@ import { jwtConstrant } from 'src/admin/constrant/jwt.config';
         schema: TokenVerifyEmailSchema,
       },
     ]),
+    PassportModule.register({
+      defaultStrategy: 'jwt',
+      property: 'user',
+      session: false,
+    }),
     JwtModule.register({
       secret: jwtConstrant.SECRET_KEY,
       signOptions: { expiresIn: jwtConstrant.EXPIRES_IN },
@@ -48,6 +55,7 @@ import { jwtConstrant } from 'src/admin/constrant/jwt.config';
     GoogleLoginRepository,
     TokenVerifyEmailRepository,
     CustomerService,
+    JwtStrategy,
   ],
   exports: [],
 })
