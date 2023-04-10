@@ -14,6 +14,7 @@ import { UserCreateDto } from '../dto/userCreateDto.dto';
 import { IResponse } from 'src/common/response.interface';
 import { EmailLoginDto } from '../dto/userCreateDto.dto';
 import { jwtConstrant } from 'src/admin/constrant/jwt.config';
+import { IUser } from '../interfaces/user.interface';
 
 @Injectable()
 export class CustomerService {
@@ -25,7 +26,7 @@ export class CustomerService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async loginWithEmail(emailLoginDto: EmailLoginDto): Promise<any> {
+  async loginWithEmail(emailLoginDto: EmailLoginDto): Promise<IUser> {
     const { email, password } = emailLoginDto;
     const user = await this.emailLoginRepository.findByCondition(
       {
@@ -105,6 +106,9 @@ export class CustomerService {
 
   //update refresh token in email login schema
   async update(filter: any, update: any): Promise<any> {
+    //1. đối với trường hợp đăng nhập thì refresh_token lúc này được tạo mới
+    // chúng ta cần hash refresh_token trước khi lưu vào database
+    //2. với trường hợp logout thì refresh_token lúc này là null thì không cần hash
     if (update.refresh_token) {
       update.refresh_token = await bcrypt.hash(update.refresh_token, 10);
     }
@@ -113,6 +117,34 @@ export class CustomerService {
       filter,
       update,
     );
+  }
+
+  async validate(email: string): Promise<IUser> {
+    const user = await this.userRepository.findByCondition(
+      { email },
+      '_id email name',
+    );
+    if (!user) {
+      throw new HttpException(
+        'Phiên đăng nhập đã hết hạn',
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
+
+    return {
+      user_id: user._id,
+      name: user.name,
+      email: user.email,
+    };
+  }
+
+  async logoutWithEmail(email: string): Promise<IResponse> {
+    await this.update({ email: email }, { refresh_token: null });
+
+    return {
+      status: 'successfully!',
+      msg: 'Logouted!',
+    };
   }
 
   async registerAccountWithEmail(
@@ -227,6 +259,50 @@ export class CustomerService {
 
   async findUserByEmail(email: string): Promise<User | any> {
     const user = await this.userRepository.findByCondition({ email });
+    return user;
+  }
+
+  async refreshTokenWithEmail(refresh_token: string): Promise<any> {
+    try {
+      // decode token to get email
+      const resultTokenDecoded = await this.jwtService.verify(refresh_token, {
+        secret: jwtConstrant.SECRET_KEY_REFRESH,
+      });
+
+      // get user from email which is decoded from refresh_token
+      const user = await this.findUserByDecodedRefreshToken(
+        resultTokenDecoded.email,
+        refresh_token,
+      );
+
+      // create new access_token
+      const token = await this._createToken(user.email, false);
+
+      return { ...token };
+    } catch (e) {
+      throw new HttpException(
+        'Invalid token::: ' + e.message,
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
+  }
+
+  async findUserByDecodedRefreshToken(
+    email: string,
+    refresh_token: string,
+  ): Promise<IUser> {
+    // first: get user from email decoded from refresh_token
+    const user = await this.emailLoginRepository.findByCondition({ email });
+
+    if (!user) {
+      throw new HttpException('Invalid token!', HttpStatus.UNAUTHORIZED);
+    }
+
+    const is_equal = await bcrypt.compare(refresh_token, user.refresh_token);
+
+    if (!is_equal) {
+      throw new HttpException('Invalid token!', HttpStatus.UNAUTHORIZED);
+    }
 
     return user;
   }
