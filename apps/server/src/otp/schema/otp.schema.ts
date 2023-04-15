@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export const TokenVerifyEmailSchema = new mongoose.Schema(
+export const OtpSchema = new mongoose.Schema(
   {
     email: {
       type: String,
@@ -17,11 +17,11 @@ export const TokenVerifyEmailSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-    collection: 'token-verify-email',
+    collection: 'otp',
   },
 );
 
-export class TokenVerifyEmail extends mongoose.Document {
+export class Otp extends mongoose.Document {
   email: string;
   token: string;
   expires: number;

@@ -8,15 +8,18 @@ import { AdminModule } from './admin/admin.module';
 import { ProductModule } from './product/product.module';
 import { AppService } from './app.service';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
-import { CustomerModule } from './customer/customer.module';
+import { AuthModule } from './auth/auth.module';
+import { OtpModule } from './otp/otp.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: '.dev.env' }),
     MongooseModule.forRoot('mongodb://localhost/do_go_dinh_thuc'),
     AdminModule,
+    UserModule,
     ProductModule,
-    CustomerModule,
+    AuthModule,
     MailerModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (config: ConfigService) => ({
@@ -29,7 +32,7 @@ import { CustomerModule } from './customer/customer.module';
           },
         },
         defaults: {
-          from: `No Reply <${config.get('MAIL_FROM')}>`,
+          from: `Đồ Gỗ Đinh Thức <${config.get('MAIL_FROM')}>`,
         },
         template: {
           dir: join(__dirname, 'src/templates/email'),
@@ -42,6 +45,7 @@ import { CustomerModule } from './customer/customer.module';
       inject: [ConfigService],
     }),
     CloudinaryModule,
+    OtpModule,
   ],
   controllers: [AppController],
   providers: [AppService],

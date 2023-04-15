@@ -8,7 +8,7 @@ export const GoogleLoginSchema = new mongoose.Schema(
       required: true,
     },
     email: { type: String, required: true },
-    google_id: { type: String, required: true },
+    refresh_token: { type: String, required: true },
   },
   {
     timestamps: true,
@@ -19,5 +19,5 @@ export const GoogleLoginSchema = new mongoose.Schema(
 export class GoogleLogin extends mongoose.Document {
   user_id: string;
   email: string;
-  google_id: string;
+  refresh_token: string;
 }

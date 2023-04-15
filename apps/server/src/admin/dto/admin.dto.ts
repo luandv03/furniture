@@ -4,8 +4,9 @@ import {
   IsString,
   MinLength,
   MaxLength,
-  Matches,
 } from 'class-validator';
+
+import { Match } from 'src/common/decorators/match.decorator';
 
 export class AdminRegisterDto {
   @IsNotEmpty()
@@ -37,7 +38,7 @@ export class AdminRegisterDto {
   @MaxLength(25, {
     message: 'Pass too length!',
   })
-  @Matches('password', 'Password no match')
+  @Match('password', { message: 'Password no macth' })
   password_confirm: string;
 }
 
@@ -80,7 +81,7 @@ export class ResetPasswordDto {
   @MaxLength(25, {
     message: 'Pass too length!',
   })
-  @Matches('password', 'Password no match')
+  @Match('password', { message: 'Password no macth' })
   password_confirm: string;
 
   @IsNotEmpty()

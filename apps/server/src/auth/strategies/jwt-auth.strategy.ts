@@ -3,12 +3,12 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import { Request } from 'express';
 import { jwtConstrant } from 'src/admin/constrant/jwt.config';
-import { CustomerService } from './../services/customer.service';
+import { AuthService } from './../services/auth.service';
 import { IUser } from '../interfaces/user.interface';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private readonly customerService: CustomerService) {
+  constructor(private readonly authService: AuthService) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (request: Request) => {
@@ -27,7 +27,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   //Ở đây nó sẽ tự động lấy token trên Header để giải mã (nhìn vào line 11 ở trên) sẽ được 1 Object (payload)
   //chứa { email, iat, exp } khi login chúng ta dùng jwtService.sign() bên AdminService
   async validate(payload: { email: string }): Promise<IUser> {
-    const user = await this.customerService.validate(payload.email);
+    const user = await this.authService.validate(payload.email);
 
     return user;
   }
