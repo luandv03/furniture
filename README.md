@@ -1,7 +1,5 @@
-# do_go_dinh_thuc
-
-Đây là website bán đồ nội thất
-
+# furniture
+...
 # Hướng dẫn
 
 dự án này sử dụng yarn (vì thế bạn hãy cài yarn trước nếu chưa có)
